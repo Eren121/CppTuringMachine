@@ -91,6 +91,23 @@ TEST_CASE("MetaTuringMachine") {
 
     SECTION("Internal implementation") {
 
+        SECTION("MetaInput as string litteral") {
+
+            static_assert(std::is_same_v<
+                INPUT(),
+                MetaInput<>
+            >, "Empty inputs should be the same (no argument version)");
+
+            static_assert(std::is_same_v<
+                INPUT(""),
+                MetaInput<>
+            >, "Empty inputs should be the same (empty quotes version)");
+
+            static_assert(std::is_same_v<
+               INPUT("abc"),
+                MetaInput<'a', 'b', 'c'>
+            >, "Inputs should be the same");
+        }
         SECTION("SearchTransition") {
 
             static_assert(SearchTransition<

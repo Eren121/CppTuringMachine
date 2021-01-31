@@ -79,6 +79,16 @@ struct MetaInput {
 };
 
 
+template <typename T, T... chars>
+constexpr MetaInput<chars...> operator""_input() { return { }; }
+
+
+/// Variadic arguments to allow no arguments at all (empty input)
+#define INPUT2() decltype(""_input)
+#define INPUT2_NON_EMPTY(str) decltype(str##_input)
+#define INPUT(...)  INPUT2##__VA_OPT__(_NON_EMPTY)(__VA_ARGS__)
+
+
 template<int stateFrom_, char read_, int stateTo_, char written_, Move move_>
 struct MetaTransition {
     static constexpr int stateFrom = stateFrom_;
